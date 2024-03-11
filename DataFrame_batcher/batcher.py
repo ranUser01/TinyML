@@ -67,7 +67,7 @@ class BatchGenerator:
         if self.batch_index >= len(self.df):
             raise StopIteration
 
-        batch = self.df.iloc[self.batch_index:self.batch_index + self.batch_size]
+        batch = self.df.iloc[self.batch_index:self.batch_index + self.batch_size].reset_index(drop=True)
         self.batch_index += self.batch_size
 
         return batch
