@@ -3,3 +3,4 @@ DDAL
 */__pycache__
 .vscode
 .conda
+data/mnist
