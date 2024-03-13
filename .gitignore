@@ -4,3 +4,4 @@ DDAL
 .vscode
 .conda
 data/mnist
+*/*/*.zip
