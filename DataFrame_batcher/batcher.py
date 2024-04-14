@@ -71,3 +71,6 @@ class BatchGenerator:
         self.batch_index += self.batch_size
 
         return batch
+    
+    def __len__(self):
+        return round(int(len(self.df)/self.batch_size))
