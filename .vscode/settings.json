@@ -1,4 +1,0 @@
-{
-    "python.createEnvironment.trigger": "prompt",
-    "python.analysis.autoImportCompletions": true
-}
