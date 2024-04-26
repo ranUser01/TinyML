@@ -1,9 +1,8 @@
-import pandas as pd
-import torch.nn as nn
+import argparse
 from torch.utils.data import DataLoader
-from torch.optim import Adam
 from torch.nn.functional import relu
-from torch import save, no_grad, max
+import torch.nn as nn
+from cnn_models_utils import train, save_model, evaluate
 
 # Basic CNN 
 class Mnist_CNN_Classifier(nn.Module):
@@ -18,70 +17,8 @@ class Mnist_CNN_Classifier(nn.Module):
         x = relu(self.linear2(x))
         x = self.linear3(x)
         return x
-
-
-from tqdm import tqdm
-
-def train(dataloader:DataLoader,num_epochs:int = 10, lr:float=0.001):
-    try:
-        model = Mnist_CNN_Classifier()
-        criterion = nn.CrossEntropyLoss()
-        optimizer = Adam(model.parameters(), lr=lr)
-
-        pbar = tqdm(total=num_epochs, desc="Training progress")
-
-        for epoch in range(num_epochs):
-            epoch_loss = 0
-            for inputs, labels in dataloader:
-                outputs = model(inputs)
-                loss = criterion(outputs, labels)
-                optimizer.zero_grad()
-                loss.backward()
-                optimizer.step()
-
-                epoch_loss += loss.item()
-
-            avg_loss = epoch_loss / len(dataloader)
-            pbar.set_postfix({'Epoch Loss': avg_loss})
-            pbar.update()
-
-            print(f"Epoch: {epoch+1}, Average Loss: {avg_loss}")
-
-        pbar.close()
-        return model
-
-    except Exception as e:
-        raise Exception(f"An error occurred during training: {e}")
-
     
-def save_model(path_dst:str = "CNN_mnist_base.torch", model = None):
-    save(model, path_dst)
-
-
-def evaluate(test_dataloader:DataLoader, model:nn.Module):
-    classes = tuple([_ for _ in range(0, 10, 1)])
-    correct_pred = {classname: 0 for classname in classes}
-    total_pred = {classname: 0 for classname in classes}
-
-    with no_grad():
-        for data in test_dataloader:
-            images, labels = data
-            outputs = model(images)
-            _, predictions = max(outputs, 1)
-            for label, prediction in zip(labels, predictions):
-                if label == prediction:
-                    correct_pred[classes[label]] += 1
-                total_pred[classes[label]] += 1
-
-    for classname, correct_count in correct_pred.items():
-        accuracy = 100 * float(correct_count) / total_pred[classname]
-        print(f'Accuracy for class: {classname} is {accuracy:.1f} %')
-
-    total_accuracy = sum(correct_pred.values()) / sum(total_pred.values())
-    print(f'Total Accuracy: {total_accuracy * 100:.1f} %')
-
-    
-def main(path_prefix:str = '../data/Mnist', local_data:bool = True):
+def main(path_prefix:str = '../data/Mnist', local_data:bool = False):
     if local_data: # use locally stored mnist data 
         from utils import ImageDFDataset
 
@@ -99,7 +36,7 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = True):
         test_dataloader = MNIST(root='./data', train=False, download=False)
 
     try:
-        model = train(train_dataloader)
+        model = train(dataloader = train_dataloader, model = Mnist_CNN_Classifier())
         if model is not None:
             save_model(model=model)
     except Exception as e:
@@ -109,4 +46,9 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = True):
     evaluate(test_dataloader, model)
     
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--path_prefix', type=str, default='../data/Mnist', help='Path prefix for data')
+    parser.add_argument('-l', '--local_data', action='store_true', help='Use locally stored mnist data')
+    args = parser.parse_args()
+    
+    main(path_prefix=args.path_prefix, local_data=args.local_data)
