@@ -38,6 +38,63 @@ def train(dataloader:DataLoader,num_epochs:int = 10, lr:float=0.001, model: nn.M
 
     except Exception as e:
         raise Exception(f"An error occurred during training: {e}")
+    
+def train_with_earlystop(dataloader:DataLoader, dataloader_val:DataLoader = None, num_epochs:int = 10, 
+                         lr:float=0.001, model: nn.Module = None, patience:int = 3):
+    if dataloader_val is None:
+        print("Dataloader_val has not been provided: proceeding with training without it")
+        return train(dataloader=dataloader,num_epochs=num_epochs,lr=lr,model=model)
+    try:
+        criterion = nn.CrossEntropyLoss()
+        optimizer = Adam(model.parameters(), lr=lr)
+
+        pbar = tqdm(total=num_epochs, desc="Training progress", ncols=150)
+
+        best_loss = float('inf')
+        early_stop_counter = 0
+
+        for epoch in range(num_epochs):
+            # print(f'epoch: {epoch}\n')
+            epoch_loss = 0
+            for inputs, labels in dataloader:
+                outputs = model(inputs)
+                loss = criterion(outputs, labels)
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                epoch_loss += loss.item()
+
+            avg_loss = epoch_loss / len(dataloader)
+
+            # Validation
+            val_loss = 0
+            with no_grad():
+                for val_inputs, val_labels in dataloader_val:
+                    val_outputs = model(val_inputs)
+                    val_loss += criterion(val_outputs, val_labels).item()
+            
+            avg_val_loss = val_loss / len(dataloader_val)
+            pbar.set_postfix({'Epoch Loss': avg_loss, 'Validation Loss': avg_val_loss
+                              , 'Best val loss': best_loss
+                              , 'Patience Counter': early_stop_counter})
+            pbar.update()
+
+            # Check for early stopping
+            if avg_val_loss < best_loss:
+                best_loss = avg_val_loss
+                early_stop_counter = 0
+            else:
+                early_stop_counter += 1
+                if early_stop_counter >= patience:
+                    print("Early stopping triggered!")
+                    break
+
+        pbar.close()
+        return model
+
+    except Exception as e:
+        raise Exception(f"An error occurred during training: {e}")
 
 def evaluate(test_dataloader:DataLoader, model:nn.Module, classes:tuple = tuple([_ for _ in range(0, 10, 1)])):
     correct_pred = {classname: 0 for classname in classes}
