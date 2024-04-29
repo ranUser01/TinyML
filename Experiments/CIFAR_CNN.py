@@ -1,8 +1,8 @@
 import argparse
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 from torch.nn.functional import relu, max_pool2d, dropout, softmax
 import torch.nn as nn
-from cnn_models_utils import train, save_model, evaluate
+from cnn_models_utils import train, save_model, evaluate, train_with_earlystop
 from torchvision.transforms import Compose, ToTensor, Normalize
 
 # Cifar CNN
@@ -47,7 +47,7 @@ class CIFAR_CNN_Classifier(nn.Module):
         x = relu(self.fc1(x))
         x = self.dropout(x, p=0.5)
         x = self.fc2(x)
-        return softmax(x)
+        return softmax(input=x, dim=1)
 
     
 def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=20):
@@ -71,15 +71,31 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=
         batch_size = 32
 
         train_dataset = CIFAR10(root='../data', train=True, download=True, transform=transform)
-        train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+        
+        
+        # split train to train and val
+        train_size = int(0.9 * len(train_dataset))
+        val_size = len(train_dataset) - train_size
+        
+        train_dataset, val_dataset = random_split(train_dataset, [train_size, val_size])
+        
+        #val
+        train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+        val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True)
 
         test_dataset = CIFAR10(root='../data', train=False, download=True, transform=transform)
         test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-
-    model = train(dataloader = train_dataloader, model = CIFAR_CNN_Classifier(), num_epochs=num_epochs)
-    if model is not None:
-        save_model(path_dst="CNN_cifar_base.torch", model=model)
+    try:
+        model = train_with_earlystop(dataloader = train_dataloader, model = CIFAR_CNN_Classifier(),
+                                            lr= 0.0009, num_epochs = 30,
+                                            patience=5, dataloader_val = val_dataloader)
+        if model is not None:
+            save_model(path_dst="CNN_cifar_downloaded.torch", model=model)
+            
+    except Exception as e:
+        print('Model saving unsuccessful')
+        raise(e)
         
     classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')

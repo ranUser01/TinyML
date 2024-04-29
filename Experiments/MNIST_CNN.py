@@ -1,14 +1,14 @@
 import argparse
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 from torch.nn.functional import relu, dropout, max_pool2d, softmax
 import torch.nn as nn
-from cnn_models_utils import train, save_model, evaluate
+from cnn_models_utils import train_with_earlystop, save_model, evaluate
 from torchvision.transforms import ToTensor
 
 # Basic CNN 
-class Mnist_CNN_Classifier(nn.Module):
+class Mnist_Linerar_NN_Classifier(nn.Module):
     def __init__(self):
-        super(Mnist_CNN_Classifier, self).__init__()
+        super(Mnist_Linerar_NN_Classifier, self).__init__()
         self.linear1 = nn.Linear(784,250)
         self.linear2 = nn.Linear(250,100)
         self.linear3 = nn.Linear(100,10)
@@ -19,9 +19,9 @@ class Mnist_CNN_Classifier(nn.Module):
         x = self.linear3(x)
         return x
     
-class Net(nn.Module):
+class Mnist_CNN_Classifier(nn.Module):
     def __init__(self):
-        super(Net, self).__init__()
+        super(Mnist_CNN_Classifier, self).__init__()
         self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
         self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
         self.conv2_drop = nn.Dropout2d()
@@ -43,19 +43,32 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = True):
 
         # train
         train_dataset = ImageDFDataset(f"{path_prefix}/mnist_train.csv", label_col_name='label')
+        val_dataset = ImageDFDataset(f"{path_prefix}/mnist_train.csv", label_col_name='label')
+        
+        # split train to train and val
+        train_size = int(0.9 * len(train_dataset))
+        val_size = len(train_dataset) - train_size
+        
+        train_dataset, val_dataset = random_split(train_dataset, [train_size, val_size])
+        
+        #val
         train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+        val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True)
 
         # test 
         test_dataset = ImageDFDataset(f"{path_prefix}/mnist_train.csv",label_col_name='label')
         test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True)
     
         try:
-            model = train(dataloader = train_dataloader, model = Mnist_CNN_Classifier())
+            model = train_with_earlystop(dataloader = train_dataloader, model = Mnist_Linerar_NN_Classifier(),
+                                        lr= 0.0009, num_epochs = 30,
+                                        patience=3, dataloader_val = val_dataloader)
             if model is not None:
                 save_model(path_dst="CNN_mnist_local.torch", model=model)
         except Exception as e:
             print('Model saving unsuccessful')
             raise(e)
+    
     
         
     else: # Download and use Pytorch's Mnist data
@@ -63,18 +76,33 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = True):
         train_dataset = MNIST(root='./data', train=True, download=True, transform=ToTensor())
         train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
         
+        # split train to train and val
+        train_size = int(0.9 * len(train_dataset))
+        val_size = len(train_dataset) - train_size
+        
+        train_dataset, val_dataset = random_split(train_dataset, [train_size, val_size])
+        
+        #val
+        train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+        val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+        
         test_dataset = MNIST(root='./data', train=False, download=False, transform=ToTensor())
         test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True)
         
         try:
-            model = train(dataloader = train_dataloader, model = Net())
+            model = train_with_earlystop(dataloader = train_dataloader, model = Mnist_CNN_Classifier(),
+                                        lr= 0.0009, num_epochs = 30,
+                                        patience=3, dataloader_val = val_dataloader)
             if model is not None:
                 save_model(path_dst="CNN_mnist_downloaded.torch", model=model)
         except Exception as e:
             print('Model saving unsuccessful')
             raise(e)
+        
     
-    evaluate(test_dataloader, model)
+    classes = tuple([_ for _ in range(0, 10, 1)])
+        
+    evaluate(test_dataloader, model, classes=classes)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
