@@ -111,7 +111,10 @@ def evaluate(test_dataloader:DataLoader, model:nn.Module, classes:tuple = tuple(
                 total_pred[classes[label]] += 1
 
     for classname, correct_count in correct_pred.items():
-        accuracy = 100 * float(correct_count) / total_pred[classname]
+        if total_pred[classname] != 0:
+            accuracy = 100 * float(correct_count) / total_pred[classname]
+        else:
+            accuracy = 0.0
         print(f'Accuracy for class: {classname} is {accuracy:.1f} %')
 
     total_accuracy = sum(correct_pred.values()) / sum(total_pred.values())
