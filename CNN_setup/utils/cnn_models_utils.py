@@ -127,12 +127,11 @@ def get_probabilities(test_dataloader:DataLoader, model:nn.Module):
             probabilities.append(outputs)
 
     return probabilities
-
     
-def save_model(path_dst: Union[str, Path] = "CNN_mnist_base.torch", model = None):
+def save_model(path_dst: Union[str, Path] = "CNN_mnist_base.torch", model = None, folder: str = 'trained_models'):
     try:
         checkpoint = {'state_dict': model.state_dict()}
-        save(checkpoint, f"models/{path_dst}")
+        save(checkpoint, f"{folder}/{path_dst}")
         # save(model, f"models/{path_dst}")
     except Exception as e:
         print('Model saving unsuccessful')

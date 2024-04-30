@@ -1,55 +1,9 @@
 import argparse
 from torch.utils.data import DataLoader, random_split
-from torch.nn.functional import relu, max_pool2d, dropout, softmax
-import torch.nn as nn
-from cnn_models_utils import train, save_model, evaluate, train_with_earlystop
+from CNN_setup.utils.cnn_models_utils import train, save_model, evaluate, train_with_earlystop
 from torchvision.transforms import Compose, ToTensor, Normalize
+from CNN_setup.model.CIFAR_CNN import CIFAR_CNN_Classifier, CIFAR10_classes
 
-# Cifar CNN
-class CIFAR_CNN_Classifier(nn.Module):
-    # That comes from cifar10_turorial from Pytorch official website
-    # def __init__(self):
-    #     super().__init__()
-    #     self.conv1 = nn.Conv2d(3, 6, 5)
-    #     self.pool = nn.MaxPool2d(2, 2)
-    #     self.conv2 = nn.Conv2d(6, 16, 5)
-    #     self.fc1 = nn.Linear(16 * 5 * 5, 120)
-    #     self.fc2 = nn.Linear(120, 84)
-    #     self.fc3 = nn.Linear(84, 10)
-
-    # def forward(self, x):
-    #     x = self.pool(relu(self.conv1(x)))
-    #     x = self.pool(relu(self.conv2(x)))
-    #     x = flatten(x, 1) # flatten all dimensions except batch
-    #     x = relu(self.fc1(x))
-    #     x = relu(self.fc2(x))
-    #     x = self.fc3(x)
-    #     return x
-    
-    #this comes from https://www.kaggle.com/code/sachinpatil1280/cifar-10-image-classification-cnn-89
-    
-    def __init__(self):
-        super().__init__()
-        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
-        self.conv3 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
-        self.pool = max_pool2d
-        self.dropout = dropout
-        self.fc1 = nn.Linear(128 * 4 * 4, 128)
-        self.fc2 = nn.Linear(128, 10)
-
-    def forward(self, x):
-        x = self.pool(relu(self.conv1(x)), kernel_size=2, stride=2)
-        x = self.pool(relu(self.conv2(x)), kernel_size=2, stride=2)
-        x = self.pool(relu(self.conv3(x)), kernel_size=2, stride=2)
-        x = x.view(-1, 128 * 4 * 4)
-        x = self.dropout(x, p=0.25)
-        x = relu(self.fc1(x))
-        x = self.dropout(x, p=0.5)
-        x = self.fc2(x)
-        return softmax(input=x, dim=1)
-
-    
 def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=20):
     if local_data: # use locally stored Cifar data 
         raise Exception("Local data has not been implemented")
@@ -62,7 +16,6 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=
         # test 
         test_dataset = ImageDFDataset(f"{path_prefix}/mnist_train.csv",label_col_name='label')
         test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True)
-        
 
     else: # Download and use Pytorch's Cifar data
         from torchvision.datasets.cifar import CIFAR10 
@@ -96,11 +49,8 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=
     except Exception as e:
         print('Model saving unsuccessful')
         raise(e)
-        
-    classes = ('plane', 'car', 'bird', 'cat',
-           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
     
-    evaluate(test_dataloader, model, classes)
+    evaluate(test_dataloader, model, CIFAR10_classes)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
