@@ -4,7 +4,7 @@ from torchvision.datasets.mnist import MNIST
 from PIL import Image
 
 class CustomCIFAR10(CIFAR10):
-    def __init__(self, root, train=True, transform=None, target_transform=None, download=False, manual_seed=None):
+    def __init__(self, root, train=False, transform=None, target_transform=None, download=False, manual_seed=None):
         super().__init__(root, train=train, transform=transform, target_transform=target_transform, download=download)
         self.manual_seed = manual_seed
 
@@ -25,7 +25,7 @@ class CustomCIFAR10(CIFAR10):
     
     
 class CustomMNIST(MNIST):
-    def __init__(self, root, train=True, transform=None, target_transform=None, download=False, manual_seed=None):
+    def __init__(self, root, train=False, transform=None, target_transform=None, download=False, manual_seed=None):
         super().__init__(root, train=train, transform=transform, target_transform=target_transform, download=download)
         self.manual_seed = manual_seed
 
