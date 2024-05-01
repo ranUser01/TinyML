@@ -1,6 +1,6 @@
 from torchvision.datasets import ImageFolder
-from torch.utils.data import ConcatDataset
-from torch.utils.data import Dataset, Subset
+from torch.utils.data import Dataset, Subset, ConcatDataset
+from torchvision.transforms import ToTensor, Compose
 import os
 
 def split_data_by_class(data:Dataset, class_index):
@@ -58,3 +58,19 @@ def combine_datasets(dataset1:Dataset, dataset2:Dataset, proportion1:float):
     combined_data = ConcatDataset([subset1, subset2])
     
     return combined_data
+
+class Flatten:
+    '''
+    Flattens a tensor to one dimension
+    '''
+    def __call__(self, tensor):
+        return tensor.view(-1)
+
+    def __repr__(self):
+        return self.__class__.__name__ + '()'
+
+def load_dataset(path:str, flat:bool = False):
+    if flat:
+        return ImageFolder(root = f'{path}', transform=Compose( [ToTensor(), Flatten()]  ))
+    else:
+        return ImageFolder(root = f'{path}', transform=ToTensor())
