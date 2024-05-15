@@ -12,7 +12,7 @@ drift_loader = DataLoader(dataset=rotated, batch_size = 32)
 test_cifar = CIFAR10(root='./data', train=False, download=True, transform=ToTensor())
 orig_loader = DataLoader(test_cifar,  batch_size=32, shuffle=True)
 
-model = load_model('trained_models\CNN_cifar_downloaded.torch', CIFAR_CNN_Classifier())
+model = load_model('trained_models/CNN_cifar_downloaded.torch', CIFAR_CNN_Classifier())
 
 out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
 
@@ -43,7 +43,7 @@ drift_loader = DataLoader(dataset=rotated, batch_size = 32)
 test_mnist = MNIST(root='./data', train=False, download=True, transform=ToTensor())
 orig_loader = DataLoader(test_mnist,  batch_size=32, shuffle=True)
 
-model = load_model('trained_models\CNN_mnist_downloaded.torch', Mnist_CNN_Classifier())
+model = load_model('trained_models/CNN_mnist_downloaded.torch', Mnist_CNN_Classifier())
 
 out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
 

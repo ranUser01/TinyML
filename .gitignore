@@ -9,3 +9,4 @@ cifar-10-python.tar.gz
 experiments/data/*
 data
 report
+results
