@@ -2,6 +2,7 @@ from torchvision.datasets import ImageFolder
 from torch.utils.data import Dataset, Subset, ConcatDataset
 from torchvision.transforms import ToTensor, Compose
 import os
+from torch import cat
 
 def split_data_by_class(data:Dataset, class_index):
     """
@@ -74,3 +75,60 @@ def load_dataset(path:str, flat:bool = False):
         return ImageFolder(root = f'{path}', transform=Compose( [ToTensor(), Flatten()]  ))
     else:
         return ImageFolder(root = f'{path}', transform=ToTensor())
+    
+    
+class GradualDrifttoader:
+    def __init__(self, orig_loader, drift_loader, shift_step = 8):
+        self.loader1 = iter(orig_loader)
+        self.loader2 = iter(drift_loader)
+        self.shift_step = shift_step
+        self.current_shift = 0
+        self.steps_so_far = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.steps_so_far += 1
+
+        batch1 = next(self.loader1, None)
+        batch2 = next(self.loader2, None)
+
+        if batch1 is None or batch2 is None:
+            raise StopIteration
+
+        if self.current_shift == 0:
+            combined_batch = batch1
+        elif self.current_shift >= 32:
+            combined_batch = batch2
+        else:
+            # Take the first (batch_size - current_shift) samples from batch1
+            batch1 = batch1[:32 - self.current_shift]
+
+            # Take the first current_shift samples from batch2
+            batch2 = batch2[:self.current_shift]
+        
+            # Take the first (batch_size - current_shift) samples from batch1
+            inputs1, labels1 = batch1[0][:32 - self.current_shift], batch1[1][:32 - self.current_shift]
+
+            # Take the first current_shift samples from batch2
+            inputs2, labels2 = batch2[0][:self.current_shift], batch2[1][:self.current_shift]
+
+            # Combine the inputs and labels from the two batches
+            combined_inputs = cat([inputs1, inputs2])
+            combined_labels = cat([labels1, labels2])
+
+            # Combine the inputs and labels into a single batch
+            combined_batch = (combined_inputs, combined_labels)
+
+        # Increase the shift for the next batch
+        if self.steps_so_far > self.__len__()//2:
+            self.current_shift += self.shift_step
+
+        return combined_batch
+    
+    def __len__(self):
+        return len(self.loader1) + self.shift_step - 1
+    
+    
+    

@@ -116,9 +116,32 @@ def evaluate(test_dataloader:DataLoader, model:nn.Module, classes:tuple = tuple(
         else:
             accuracy = 0.0
         print(f'Accuracy for class: {classname} is {accuracy:.1f} %')
+    
+def evaluate_batch(batch, model:nn.Module, classes:tuple = tuple([_ for _ in range(0, 10, 1)])):
+    correct_pred = {classname: 0 for classname in classes}
+    total_pred = {classname: 0 for classname in classes}
+
+    with no_grad():
+        images, labels = batch
+        outputs = model(images)
+        predictions = argmax(outputs, 1) 
+        for label, prediction in zip(labels, predictions):
+            if label == prediction:
+                correct_pred[classes[label]] += 1
+            total_pred[classes[label]] += 1
+
+    accuracy_dict = {}
+    for classname, correct_count in correct_pred.items():
+        if total_pred[classname] != 0:
+            accuracy = 100 * float(correct_count) / total_pred[classname]
+        else:
+            accuracy = 0.0
+        accuracy_dict[classname] = accuracy
 
     total_accuracy = sum(correct_pred.values()) / sum(total_pred.values())
-    print(f'Total Accuracy: {total_accuracy * 100:.1f} %')
+    accuracy_dict['Total Accuracy'] = total_accuracy
+
+    return accuracy_dict
     
 def get_probabilities(test_dataloader:DataLoader, model:nn.Module):
     probabilities = []
@@ -130,6 +153,14 @@ def get_probabilities(test_dataloader:DataLoader, model:nn.Module):
             probabilities.append(outputs)
 
     return probabilities
+
+def get_probabilities_batch(batch, model:nn.Module):
+
+    with no_grad():
+        images, _ = batch
+        outputs = model(images)
+        
+    return outputs
     
 def save_model(path_dst: Union[str, Path] = "CNN_mnist_base.torch", model = None, folder: str = 'trained_models'):
     try:

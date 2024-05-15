@@ -1,0 +1,8 @@
+CPU Utilization: %MEM%
+Memory Utilization: CMD%
+CPU Utilization: %MEM%
+Memory Utilization: CMD%
+CPU Utilization: %MEM%
+Memory Utilization: CMD%
+CPU Utilization: %MEM%
+Memory Utilization: CMD%
