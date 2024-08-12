@@ -8,3 +8,5 @@ data/mnist
 cifar-10-python.tar.gz
 experiments/data/*
 report
+data/train/*
+data\transformed\train\mnist-wo-0
