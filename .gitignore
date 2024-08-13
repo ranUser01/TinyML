@@ -13,3 +13,5 @@ data\transformed\train\mnist-wo-0
 data/transformed/train/mnist-wo-0
 data/transformed/train_mnist/
 experiments_results/
+data/transformed/
+data/transformed/test_mnist/

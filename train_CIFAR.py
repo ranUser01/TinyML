@@ -2,7 +2,7 @@ import argparse
 from torch.utils.data import DataLoader, random_split
 from CNN_setup.utils.cnn_models_utils import train, save_model, evaluate, train_with_earlystop
 from torchvision.transforms import Compose, ToTensor, Normalize
-from CNN_setup.model.CIFAR_CNN import CIFAR_CNN_Classifier, CIFAR10_classes
+from CNN_setup.model.CIFAR_CNN import CIFAR_CNN_Classifier ##, CIFAR10_classes
 
 def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=20):
     if local_data: # use locally stored Cifar data 
@@ -24,7 +24,6 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=
         batch_size = 32
 
         train_dataset = CIFAR10(root='../data', train=True, download=True, transform=transform)
-        
         
         # split train to train and val
         train_size = int(0.9 * len(train_dataset))
@@ -49,6 +48,8 @@ def main(path_prefix:str = '../data/Mnist', local_data:bool = False, num_epochs=
     except Exception as e:
         print('Model saving unsuccessful')
         raise(e)
+    
+    CIFAR10_classes = tuple([_ for _ in range(0, 10, 1)]) 
     
     evaluate(test_dataloader, model, CIFAR10_classes)
     

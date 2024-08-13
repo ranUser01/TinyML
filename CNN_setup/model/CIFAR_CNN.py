@@ -1,3 +1,4 @@
+from torch import flatten
 from torch.nn.functional import relu, max_pool2d, dropout, softmax
 import torch.nn as nn
 
