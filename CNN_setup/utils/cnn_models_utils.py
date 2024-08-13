@@ -117,7 +117,7 @@ def evaluate(test_dataloader:DataLoader, model:nn.Module, classes:tuple = tuple(
             accuracy = 0.0
         print(f'Accuracy for class: {classname} is {accuracy:.1f} %')
     
-def evaluate_batch(batch, model:nn.Module, classes:tuple = tuple([_ for _ in range(0, 10, 1)])):
+def evaluate_batch(batch, model:nn.Module, classes:tuple = tuple([_ for _ in range(0, 10, 1)]) , save_output_layer:bool = False):
     correct_pred = {classname: 0 for classname in classes}
     total_pred = {classname: 0 for classname in classes}
 
@@ -140,6 +140,11 @@ def evaluate_batch(batch, model:nn.Module, classes:tuple = tuple([_ for _ in ran
 
     total_accuracy = sum(correct_pred.values()) / sum(total_pred.values())
     accuracy_dict['Total Accuracy'] = total_accuracy
+    
+    # if save_output_layer:
+    #     import time, pickle
+    #     with open('experiments_results/model_output.dict', 'wb') as f:
+    #         pickle.dump(out, f)
 
     return accuracy_dict
     
