@@ -7,7 +7,7 @@ from torchvision.datasets import CIFAR10, ImageFolder, MNIST
 from DDAL_utils import DDAL_test, DDAL_test_gradual
 import pickle
 
-bs = 64 ## batch size
+bs = 32 ## batch size
 
 # import time  // add another argument to the experiment files to store more than 1 run
 # cases = ['cifar', 'mnist']
