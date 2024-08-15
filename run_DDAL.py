@@ -80,23 +80,32 @@ model = load_model('trained_models/CNN_cifar_downloaded.torch', CIFAR_CNN_Classi
 
 out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
 
+print(out['Drift Detected'])
+
 with open('experiments_results/DDAL/cifar_rotate_abrupt_rotate.dict', 'wb') as f:
     pickle.dump(out, f)
-
+    
 out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
 
+print(out['Drift Detected'])
+    
 with open('experiments_results/DDAL/cifar_rotate_gradual_rotate.dict', 'wb') as f:
     pickle.dump(out, f)
-    
+
 withhold_class = ImageFolder(root='data/transformed/cifar-w-0', transform=ToTensor())
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
 out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+    
+print(out['Drift Detected'])
 
 with open('experiments_results/DDAL/cifar_abrupt_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
 
 out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
 
+print(out['Drift Detected'])
+
 with open('experiments_results/DDAL/cifar_gradual_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
+    

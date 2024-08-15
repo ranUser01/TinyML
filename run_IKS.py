@@ -73,21 +73,29 @@ out = test_IKS_abrupt(orig_loader=orig_loader,drift_loader=drift_loader)
 
 with open('experiments_results/IKS/cifar_rotate_abrupt_rotate.dict', 'wb') as f:
     pickle.dump(out, f)
+    
+print(out['Drift Detected'])
 
 out = test_IKS_gradual(orig_loader=orig_loader,drift_loader=drift_loader)
 
 with open('experiments_results/IKS/cifar_rotate_gradual_rotate.dict', 'wb') as f:
     pickle.dump(out, f)
     
+print(out['Drift Detected'])
+    
 withhold_class = ImageFolder(root='data/transformed/cifar-w-0', transform=ToTensor())
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
 out = test_IKS_abrupt(orig_loader=orig_loader,drift_loader=drift_loader)
+    
+print(out['Drift Detected'])
 
 with open('experiments_results/IKS/cifar_abrupt_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
 
 out = test_IKS_gradual(orig_loader=orig_loader,drift_loader=drift_loader)
+    
+print(out['Drift Detected'])
 
 with open('experiments_results/IKS/cifar_gradual_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
