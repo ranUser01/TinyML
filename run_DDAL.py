@@ -7,7 +7,7 @@ from torchvision.datasets import CIFAR10, ImageFolder, MNIST
 from DDAL_utils import DDAL_test, DDAL_test_gradual
 import pickle
 
-bs = 32 ## batch size
+bs = 160 ## batch size
 
 # import time  // add another argument to the experiment files to store more than 1 run
 # cases = ['cifar', 'mnist']
@@ -24,7 +24,7 @@ model = load_model('trained_models/CNN_mnist_downloaded.torch', Mnist_CNN_Classi
 
 # ## Sanity check to verify performence on clean test data 
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs, theta = 0.05, lambida = 0.90)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 with open('experiments_results/DDAL/mnist_clean_test.dict', 'wb') as f:
     pickle.dump(out, f)
@@ -36,7 +36,7 @@ print(out['Drift Detected'])
 withhold_class = ImageFolder(root='data/transformed/mnist-w-0', transform=Compose([ToTensor(),Grayscale(num_output_channels=1)]))
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs, theta = 0.05, lambida = 0.90)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 with open('experiments_results/DDAL/mnist_abrupt_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
@@ -45,7 +45,7 @@ print(out['Drift Detected'])
     
 ## Gradual case withhold
 
-out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs, theta = 0.05, lambida = 0.90)
+out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 with open('experiments_results/DDAL/mnist_gradual_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
@@ -54,7 +54,7 @@ print(out['Drift Detected'])
     
 # ## Abrupt case rotation
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 with open('experiments_results/DDAL/mnist_rotate_abrupt_rotate.dict', 'wb') as f:
     pickle.dump(out, f)
@@ -63,7 +63,7 @@ print(out['Drift Detected'])
 
 ## Gradual case rotation
 
-out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 with open('experiments_results/DDAL/mnist_rotate_gradual_rotate.dict', 'wb') as f:
     pickle.dump(out, f)
@@ -78,31 +78,31 @@ orig_loader = DataLoader(test_cifar,  batch_size = bs, shuffle=True)
 
 model = load_model('trained_models/CNN_cifar_downloaded.torch', CIFAR_CNN_Classifier())
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 print(out['Drift Detected'])
 
-with open('experiments_results/DDAL/cifar_rotate_abrupt_rotate.dict', 'wb') as f:
+with open('experiments_results/DDAL/cifar_rotate_abrupt.dict', 'wb') as f:
     pickle.dump(out, f)
     
-out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 print(out['Drift Detected'])
     
-with open('experiments_results/DDAL/cifar_rotate_gradual_rotate.dict', 'wb') as f:
+with open('experiments_results/DDAL/cifar_rotate_gradual.dict', 'wb') as f:
     pickle.dump(out, f)
 
 withhold_class = ImageFolder(root='data/transformed/cifar-w-0', transform=ToTensor())
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
     
 print(out['Drift Detected'])
 
 with open('experiments_results/DDAL/cifar_abrupt_w-0.dict', 'wb') as f:
     pickle.dump(out, f)
 
-out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model)
+out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 print(out['Drift Detected'])
 

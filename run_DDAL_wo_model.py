@@ -7,7 +7,7 @@ from torchvision.datasets import CIFAR10, ImageFolder, MNIST
 from DDAL_utils import DDAL_test, DDAL_test_gradual
 import pickle
 
-bs = 64 ## batch size
+bs = 32 ## batch size
 
 # import time  // add another argument to the experiment files to store more than 1 run
 # cases = ['cifar', 'mnist']
@@ -24,7 +24,7 @@ model = load_model('trained_models/CNN_mnist_wo_0.torch', Mnist_CNN_Classifier()
 
 # ## Sanity check to verify performence on clean test data 
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs, theta = 0.05, lambida = 0.90)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs,  theta  = 0.750, lambida = 0.850)
 
 with open('experiments_results/DDAL_wo_model/mnist_clean_test.dict', 'wb') as f:
     pickle.dump(out, f)
@@ -36,7 +36,7 @@ print(out['Drift Detected'])
 withhold_class = ImageFolder(root='data/transformed/mnist-w-0', transform=Compose([ToTensor(),Grayscale(num_output_channels=1)]))
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
-out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs, theta = 0.05, lambida = 0.90)
+out = DDAL_test(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.750, lambida = 0.850)
 
 print(out['Drift Detected'])
 
@@ -45,7 +45,7 @@ with open('experiments_results/DDAL_wo_model/mnist_abrupt_w-0.dict', 'wb') as f:
     
 ## Gradual case withhold
 
-out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs, theta = 0.05, lambida = 0.90)
+out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.750, lambida = 0.850)
 
 with open('experiments_results/DDAL_wo_model/mnist_gradual_w-0.dict', 'wb') as f:
     pickle.dump(out, f)

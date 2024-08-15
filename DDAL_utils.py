@@ -30,7 +30,7 @@ def DDAL_test(orig_loader, drift_loader, model, size_batch = 32, theta = 0.005, 
         ## Here the dataloader changes to simulate an abrupt drift 
         if n == len(orig_loader) // 2 and drift_loader is not None:
             cur_loader = drift_loader
-            res_dict['drift started at'] = n 
+            res_dict['Drift started at'] = n 
         
         for b in cur_loader:
             res_dict[n] = evaluate_batch(batch=b,model=model)

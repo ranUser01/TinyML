@@ -29,7 +29,7 @@ for la, th, bs in product(lambidas, thetas, batch_sizes):
 
     out = DDAL_test(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs, theta = th, lambida = la)
 
-    with open(f'experiments_results/finetune_ddal_wo_0/mnist_clean_test_la_{la}_th_{th}_bs_{bs}.dict', 'wb') as f:
+    with open(f'experiments_results/finetune_ddal_wo_0/mnist_clean_test_la{la}_th{th}_bs{bs}.dict', 'wb') as f:
         pickle.dump(out, f)
     
     print(out['Drift Detected'])
@@ -50,7 +50,7 @@ for la, th, bs in product(lambidas, thetas, batch_sizes):
 
     out = DDAL_test_gradual(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs, theta = th, lambida = la)
 
-    with open(f'experiments_results/finetune_ddal_wo_0/mnist_gradual_w-0_la{la}_th{th}_bs:{bs}.dict', 'wb') as f:
+    with open(f'experiments_results/finetune_ddal_wo_0/mnist_gradual_w-0_la{la}_th{th}_bs{bs}.dict', 'wb') as f:
         pickle.dump(out, f)
         
     print(out['Drift Detected'])

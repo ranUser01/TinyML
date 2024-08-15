@@ -1,4 +1,4 @@
-from incremental_ks.IncrementalKS.IKS import IKS
+from incremental_ks.IncrementalKS.IKSSW import IKSSW
 from CNN_setup.datasets.dataset_tools import GradualDrifttoader
 
 def test_IKS_abrupt(orig_loader, drift_loader):
@@ -6,7 +6,8 @@ def test_IKS_abrupt(orig_loader, drift_loader):
     res_dict['Drift Detected'] = list()
     
     n = -1
-    iks_list = [IKS() for _ in range(28**2)]  # create a seperate IKS for each feature in the image 
+    
+    iks_list = [None for _ in range(28**2)]  # create a seperate IKS for each feature in the image 
 
     cur_loader = orig_loader
     for i in range(len(orig_loader)):
@@ -21,17 +22,18 @@ def test_IKS_abrupt(orig_loader, drift_loader):
         ## Here the dataloader changes to simulate an abrupt drift 
         if n == len(orig_loader) // 2 and drift_loader is not None:
             cur_loader = drift_loader
-            res_dict['drift started at'] = n 
+            res_dict['Drift started at'] = n 
 
         for img, label in cur_loader: # it returns only 1 batch at a time
-            assert(len(label) == 1) # ensures that I take only 1 image
+            # assert(len(label) == 1) # ensures that I take only 1 image
             img = img.reshape(1,-1).tolist()[0]
 
             for iks, feature_val in zip(iks_list, img):
-                if n != -1 : ## if it does not setup reference windows 
-                    iks.Add(feature_val,1)
+                if n == 0 : ## if it does not setup reference windows 
+                    for i in range(len(iks_list)):
+                        iks_list[i] = IKSSW([feature_val])
                 else: # set reference 
-                    iks.Add(feature_val, 0)
+                    iks.Increment(feature_val)
                     ks_statistics.append(iks.KS())
                     test_res = iks.Test()
                     iks_test_results.append(test_res)
@@ -39,6 +41,8 @@ def test_IKS_abrupt(orig_loader, drift_loader):
                         print(f'Drift detected at: {n}')
                         res_dict['Drift Detected'].append(n)
                     res_dict[i] = (iks_test_results, ks_statistics)
+            
+            break
                     
     return res_dict
   
@@ -47,10 +51,9 @@ def test_IKS_gradual(orig_loader, drift_loader):
     res_dict = {}
     res_dict['Drift Detected'] = list()
     
-    n = -1
-    iks_list = [IKS() for _ in range(28**2)]  # create a seperate IKS for each feature in the image 
+    iks_list = [None for _ in range(28**2)]  # create a seperate IKS for each feature in the image 
     
-    grad_loader = GradualDrifttoader(orig_loader,drift_loader)
+    grad_loader = GradualDrifttoader(orig_loader,drift_loader, shift_step = 8)
     res_dict = {}
     res_dict['Drift Detected'] = list()
     res_dict['Drift started at'] = len(grad_loader)//2
@@ -59,21 +62,27 @@ def test_IKS_gradual(orig_loader, drift_loader):
         iks_test_results = []
         ks_statistics = []
 
-        for img, label in grad_loader: # it returns only 1 batch at a time
-            assert(len(label) == 1) # ensures that I take only 1 image
-            img = img.reshape(1,-1).tolist()[0]
+        for batch in grad_loader:
+            imgs, _ = batch
+            for i in range(imgs.shape[0]): # it returns only 1 batch at a time
+                img = imgs[i]
+                # assert(len(label) == 1) # ensures that I take only 1 image
+                img = img.reshape(1,-1).tolist()[0]
 
-            for iks, feature_val in zip(iks_list, img):
-                if n != -1 : ## if it does not setup reference windows 
-                    iks.Add(feature_val,1)
-                else: # set reference 
-                    iks.Add(feature_val, 0)
-                    ks_statistics.append(iks.KS())
-                    test_res = iks.Test()
-                    iks_test_results.append(test_res)
-                    if test_res : 
-                        print(f'Drift detected at: {n}')
-                        res_dict['Drift Detected'].append(n)
-                    res_dict[i] = (iks_test_results, ks_statistics)
-                    
+                for iks, feature_val in zip(iks_list, img):
+                    if i == 0 : ## if it does not setup reference windows 
+                        for i in range(len(iks_list)):
+                            iks_list[i] = IKSSW([feature_val])
+                    else : # set observation and remove old one 
+                        iks.Increment(feature_val)
+                        ks_statistics.append(iks.KS())
+                        test_res = iks.Test()
+                        iks_test_results.append(test_res)
+                        if test_res : 
+                            print(f'Drift detected at: {i}')
+                            res_dict['Drift Detected'].append(i)
+                        res_dict[i] = (iks_test_results, ks_statistics)
+                        
+                break
+                        
     return res_dict
