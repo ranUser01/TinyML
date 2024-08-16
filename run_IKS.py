@@ -12,24 +12,24 @@ drift_loader = DataLoader(dataset=rotated, batch_size = bs)
 test_mnist = MNIST(root='./data', train=False, download=True, transform=ToTensor())
 orig_loader = DataLoader(test_mnist, batch_size = bs, shuffle=True)
 
-# ## Sanity check to verify performence on clean test data 
-# print('Run started')
+## Sanity check to verify performence on clean test data 
+print('Run started')
 
-# out = test_IKS_abrupt(orig_loader=orig_loader,drift_loader=None)
+out = test_IKS_abrupt(orig_loader=orig_loader,drift_loader=None)
 
-# with open('experiments_results/IKS/mnist_clean_test.dict', 'wb') as f:
-#     pickle.dump(out, f)
+with open('experiments_results/IKS/mnist_clean_test.dict', 'wb') as f:
+    pickle.dump(out, f)
     
-# print(out['Drift Detected'])
+print(out['Drift Detected'])
 
-# # ## Abrupt case rotation
+# ## Abrupt case rotation
 
-# out = test_IKS_abrupt(orig_loader=orig_loader,drift_loader=drift_loader)
+out = test_IKS_abrupt(orig_loader=orig_loader,drift_loader=drift_loader)
 
-# with open('experiments_results/IKS/mnist_rotate_abrupt_rotate.dict', 'wb') as f:
-#     pickle.dump(out, f)
+with open('experiments_results/IKS/mnist_rotate_abrupt_rotate.dict', 'wb') as f:
+    pickle.dump(out, f)
     
-# print(out['Drift Detected'])
+print(out['Drift Detected'])
 
 ## Gradual case rotation
 
