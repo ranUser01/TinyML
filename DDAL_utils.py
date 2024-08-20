@@ -74,3 +74,60 @@ def DDAL_test_gradual(orig_loader, drift_loader, model, size_batch = 32, theta =
             CDD_DDAL.reset()
             
     return res_dict
+
+def DDAL_test_quick(orig_loader, drift_loader, model, size_batch = 32, theta = 0.005, lambida = 0.95):
+    
+    """
+    This function runs and tests performance of DDAL within an abrupt setting.
+    
+    if drift_loader is none then only orig_loader is used 
+    
+    """
+    CDD_DDAL = DDAL_detector(size_batch = size_batch,theta = theta, lambida = lambida)
+    n = -1
+    cur_loader = orig_loader
+    for i in range(len(orig_loader)):
+        if n == len(orig_loader):
+            break
+        else:
+            n += 1
+        
+        ## Here the dataloader changes to simulate an abrupt drift 
+        if n == len(orig_loader) // 2 and drift_loader is not None:
+            cur_loader = drift_loader
+        
+        for b in cur_loader:
+            probs = get_probabilities_batch(batch=b,model=model)
+            max_values, _ = max(probs, dim=1, keepdim=True)
+            CDD_DDAL.count_tensor(max_values)
+            break
+        
+        CDD_DDAL.compute_current_density()
+        if CDD_DDAL.detection_module():
+            CDD_DDAL.reset()
+            
+    return True
+
+def DDAL_test_gradual_quick(orig_loader, drift_loader, model, size_batch = 32, theta = 0.005, lambida = 0.95):
+    
+    """
+    This function runs and tests performance of DDAL within an gradual setting.
+    
+    if drift_loader is none then only orig_loader is used 
+    
+    """
+    
+    grad_loader = GradualDrifttoader(orig_loader,drift_loader)
+    CDD_DDAL = DDAL_detector(size_batch = size_batch,theta = theta, lambida = lambida)
+    for i in range(len(grad_loader)):
+        for b in grad_loader:
+            probs = get_probabilities_batch(batch=b,model=model)
+            max_values, _ = max(probs, dim=1, keepdim=True)
+            CDD_DDAL.count_tensor(max_values)
+            break
+        
+        CDD_DDAL.compute_current_density()
+        if CDD_DDAL.detection_module():
+            CDD_DDAL.reset()
+            
+    return True
