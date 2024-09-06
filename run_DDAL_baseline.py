@@ -4,7 +4,7 @@ from CNN_setup.utils.cnn_models_utils import load_model
 from torchvision.transforms import  ToTensor, Compose, Grayscale
 from torch.utils.data import DataLoader
 from torchvision.datasets import CIFAR10, ImageFolder, MNIST
-from DDAL_utils import DDAL_test_baseline, DDAL_test_baseline
+from DDAL_utils import DDAL_test_quick, DDAL_test_gradual_quick
 import pickle
 
 bs = 160 ## batch size
@@ -24,7 +24,7 @@ model = load_model('trained_models/CNN_mnist_downloaded.torch', Mnist_CNN_Classi
 
 # ## Sanity check to verify performence on clean test data 
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_quick(orig_loader=orig_loader,drift_loader=None, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
  
 ## Abrupt case withhold
@@ -32,22 +32,22 @@ out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=None, model=model,
 withhold_class = ImageFolder(root='data/transformed/mnist-w-0', transform=Compose([ToTensor(),Grayscale(num_output_channels=1)]))
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 ## Gradual case withhold
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_gradual_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 
     
 # ## Abrupt case rotation
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 
 ## Gradual case rotation
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_gradual_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 
 
@@ -59,18 +59,18 @@ orig_loader = DataLoader(test_cifar,  batch_size = bs, shuffle=True)
 
 model = load_model('trained_models/CNN_cifar_downloaded.torch', CIFAR_CNN_Classifier())
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
     
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_gradual_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 
 withhold_class = ImageFolder(root='data/transformed/cifar-w-0', transform=ToTensor())
 drift_loader = DataLoader(dataset=withhold_class, batch_size = bs)
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
     
 
-out = DDAL_test_baseline(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
+out = DDAL_test_gradual_quick(orig_loader=orig_loader,drift_loader=drift_loader, model=model, size_batch = bs,  theta  = 0.850, lambida = 0.975)
 
 

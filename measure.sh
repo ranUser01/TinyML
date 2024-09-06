@@ -14,7 +14,7 @@ get_cpu_mem_util() {
   local pid="$1"
   cpu_util=$(ps -p "$pid" -o %cpu,cmd | awk '{print $1}')
   mem_util=$(ps -p "$pid" -o %mem,cmd | awk '{print $1}')
-  echo "$cpu_util,$mem_util"
+  echo -e ",$cpu_util, $mem_util"
 }
 
 # Flag to indicate if headers have been printed

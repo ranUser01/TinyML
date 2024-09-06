@@ -131,3 +131,24 @@ def DDAL_test_gradual_quick(orig_loader, drift_loader, model, size_batch = 32, t
             CDD_DDAL.reset()
             
     return True
+
+def DDAL_test_baseline(orig_loader, drift_loader, model, size_batch = 32, theta = 0.005, lambida = 0.95):
+    n = -1
+    cur_loader = orig_loader
+    for i in range(len(orig_loader)):
+        if n == len(orig_loader):
+            break
+        else:
+            n += 1
+        
+        ## Here the dataloader changes to simulate an abrupt drift 
+        if n == len(orig_loader) // 2 and drift_loader is not None:
+            cur_loader = drift_loader
+        
+        for b in cur_loader:
+            probs = get_probabilities_batch(batch=b,model=model)
+            max_values, _ = max(probs, dim=1, keepdim=True)
+            break
+        
+            
+    return True

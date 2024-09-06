@@ -2,6 +2,7 @@ CPU Utilization,Memory Utilization
 ,%CPU
 0.0,%MEM
 0.1
+0.1
 ,%CPU
 284,%MEM
 3.6

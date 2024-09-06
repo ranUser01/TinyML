@@ -1,0 +1,856 @@
+CPU Utilization,Memory Utilization
+,%CPU
+0.0, %MEM
+0.0
+,%CPU
+294, %MEM
+3.6
+,%CPU
+486, %MEM
+4.0
+,%CPU
+550, %MEM
+4.0
+,%CPU
+423, %MEM
+4.1
+,%CPU
+346, %MEM
+4.1
+,%CPU
+252, %MEM
+4.1
+,%CPU
+226, %MEM
+4.1
+,%CPU
+205, %MEM
+4.1
+,%CPU
+188, %MEM
+4.1
+,%CPU
+175, %MEM
+4.1
+,%CPU
+163, %MEM
+4.2
+,%CPU
+153, %MEM
+4.2
+,%CPU
+146, %MEM
+4.2
+,%CPU
+138, %MEM
+4.2
+,%CPU
+132, %MEM
+4.2
+,%CPU
+126, %MEM
+4.2
+,%CPU
+121, %MEM
+4.2
+,%CPU
+117, %MEM
+4.2
+,%CPU
+113, %MEM
+4.2
+,%CPU
+109, %MEM
+4.2
+,%CPU
+106, %MEM
+4.2
+,%CPU
+103, %MEM
+4.2
+,%CPU
+100, %MEM
+4.2
+,%CPU
+98.2, %MEM
+4.2
+,%CPU
+95.9, %MEM
+4.2
+,%CPU
+93.8, %MEM
+4.2
+,%CPU
+91.8, %MEM
+4.2
+,%CPU
+90.0, %MEM
+4.2
+,%CPU
+88.2, %MEM
+4.2
+,%CPU
+86.6, %MEM
+4.2
+,%CPU
+85.0, %MEM
+4.2
+,%CPU
+83.8, %MEM
+4.2
+,%CPU
+82.4, %MEM
+4.2
+,%CPU
+81.2, %MEM
+4.2
+,%CPU
+79.9, %MEM
+4.2
+,%CPU
+78.8, %MEM
+4.2
+,%CPU
+77.5, %MEM
+4.2
+,%CPU
+76.5, %MEM
+4.2
+,%CPU
+75.6, %MEM
+4.2
+,%CPU
+74.6, %MEM
+4.2
+,%CPU
+73.8, %MEM
+4.2
+,%CPU
+72.9, %MEM
+4.2
+,%CPU
+72.1, %MEM
+4.2
+,%CPU
+71.4, %MEM
+4.2
+,%CPU
+70.6, %MEM
+4.2
+,%CPU
+69.9, %MEM
+4.2
+,%CPU
+69.1, %MEM
+4.2
+,%CPU
+68.4, %MEM
+4.2
+,%CPU
+67.8, %MEM
+4.2
+,%CPU
+67.1, %MEM
+4.2
+,%CPU
+66.5, %MEM
+4.2
+,%CPU
+66.0, %MEM
+4.2
+,%CPU
+65.5, %MEM
+4.2
+,%CPU
+65.0, %MEM
+4.2
+,%CPU
+64.5, %MEM
+4.2
+,%CPU
+64.0, %MEM
+4.2
+,%CPU
+63.5, %MEM
+4.2
+,%CPU
+63.0, %MEM
+4.2
+,%CPU
+62.7, %MEM
+4.2
+,%CPU
+62.2, %MEM
+4.2
+,%CPU
+61.7, %MEM
+4.2
+,%CPU
+61.3, %MEM
+4.2
+,%CPU
+67.5, %MEM
+4.2
+,%CPU
+67.0, %MEM
+4.2
+,%CPU
+66.5, %MEM
+4.2
+,%CPU
+66.1, %MEM
+4.2
+,%CPU
+65.6, %MEM
+4.2
+,%CPU
+65.2, %MEM
+4.2
+,%CPU
+64.8, %MEM
+4.2
+,%CPU
+64.5, %MEM
+4.2
+,%CPU
+64.1, %MEM
+4.2
+,%CPU
+63.7, %MEM
+4.2
+,%CPU
+63.3, %MEM
+4.2
+,%CPU
+63.0, %MEM
+4.2
+,%CPU
+62.6, %MEM
+4.2
+,%CPU
+62.3, %MEM
+4.2
+,%CPU
+62.0, %MEM
+4.2
+,%CPU
+61.7, %MEM
+4.2
+,%CPU
+61.4, %MEM
+4.2
+,%CPU
+61.1, %MEM
+4.2
+,%CPU
+60.8, %MEM
+4.2
+,%CPU
+60.5, %MEM
+4.2
+,%CPU
+60.2, %MEM
+4.2
+,%CPU
+60.0, %MEM
+4.2
+,%CPU
+59.7, %MEM
+4.2
+,%CPU
+59.4, %MEM
+4.2
+,%CPU
+59.2, %MEM
+4.2
+,%CPU
+59.0, %MEM
+4.2
+,%CPU
+58.7, %MEM
+4.2
+,%CPU
+58.4, %MEM
+4.2
+,%CPU
+58.2, %MEM
+4.2
+,%CPU
+58.0, %MEM
+4.2
+,%CPU
+57.8, %MEM
+4.2
+,%CPU
+57.6, %MEM
+4.2
+,%CPU
+57.4, %MEM
+4.2
+,%CPU
+57.2, %MEM
+4.2
+,%CPU
+57.0, %MEM
+4.2
+,%CPU
+56.8, %MEM
+4.2
+,%CPU
+56.5, %MEM
+4.2
+,%CPU
+56.3, %MEM
+4.2
+,%CPU
+56.1, %MEM
+4.2
+,%CPU
+56.0, %MEM
+4.2
+,%CPU
+55.8, %MEM
+4.2
+,%CPU
+55.6, %MEM
+4.2
+,%CPU
+55.4, %MEM
+4.2
+,%CPU
+55.2, %MEM
+4.2
+,%CPU
+55.1, %MEM
+4.2
+,%CPU
+54.9, %MEM
+4.2
+,%CPU
+54.8, %MEM
+4.2
+,%CPU
+54.6, %MEM
+4.2
+,%CPU
+54.5, %MEM
+4.2
+,%CPU
+54.3, %MEM
+4.2
+,%CPU
+54.2, %MEM
+4.2
+,%CPU
+53.6, %MEM
+4.2
+,%CPU
+53.5, %MEM
+4.2
+,%CPU
+53.3, %MEM
+4.2
+,%CPU
+53.5, %MEM
+4.2
+,%CPU
+56.5, %MEM
+4.2
+,%CPU
+56.3, %MEM
+4.2
+,%CPU
+56.2, %MEM
+4.2
+,%CPU
+56.0, %MEM
+4.2
+,%CPU
+55.9, %MEM
+4.2
+,%CPU
+55.7, %MEM
+4.2
+,%CPU
+55.5, %MEM
+4.2
+,%CPU
+55.4, %MEM
+4.2
+,%CPU
+55.2, %MEM
+4.2
+,%CPU
+55.1, %MEM
+4.2
+,%CPU
+54.9, %MEM
+4.2
+,%CPU
+54.8, %MEM
+4.2
+,%CPU
+54.7, %MEM
+4.2
+,%CPU
+54.5, %MEM
+4.2
+,%CPU
+54.4, %MEM
+4.2
+,%CPU
+54.3, %MEM
+4.2
+,%CPU
+54.1, %MEM
+4.2
+,%CPU
+54.0, %MEM
+4.2
+,%CPU
+53.9, %MEM
+4.2
+,%CPU
+53.8, %MEM
+4.2
+,%CPU
+53.7, %MEM
+4.2
+,%CPU
+53.6, %MEM
+4.2
+,%CPU
+53.5, %MEM
+4.2
+,%CPU
+53.4, %MEM
+4.2
+,%CPU
+53.2, %MEM
+4.2
+,%CPU
+53.2, %MEM
+4.2
+,%CPU
+53.1, %MEM
+4.2
+,%CPU
+53.0, %MEM
+4.2
+,%CPU
+52.9, %MEM
+4.2
+,%CPU
+52.8, %MEM
+4.2
+,%CPU
+52.7, %MEM
+4.2
+,%CPU
+52.6, %MEM
+4.2
+,%CPU
+52.5, %MEM
+4.2
+,%CPU
+52.4, %MEM
+4.2
+,%CPU
+52.3, %MEM
+4.2
+,%CPU
+52.2, %MEM
+4.2
+,%CPU
+52.1, %MEM
+4.2
+,%CPU
+52.0, %MEM
+4.2
+,%CPU
+51.9, %MEM
+4.2
+,%CPU
+51.8, %MEM
+4.2
+,%CPU
+51.7, %MEM
+4.2
+,%CPU
+51.6, %MEM
+4.2
+,%CPU
+51.5, %MEM
+4.2
+,%CPU
+51.4, %MEM
+4.2
+,%CPU
+51.4, %MEM
+4.2
+,%CPU
+51.3, %MEM
+4.2
+,%CPU
+51.2, %MEM
+4.2
+,%CPU
+51.1, %MEM
+4.2
+,%CPU
+51.0, %MEM
+4.2
+,%CPU
+50.9, %MEM
+4.2
+,%CPU
+50.9, %MEM
+4.2
+,%CPU
+50.8, %MEM
+4.2
+,%CPU
+50.7, %MEM
+4.2
+,%CPU
+50.6, %MEM
+4.2
+,%CPU
+51.9, %MEM
+4.2
+,%CPU
+53.4, %MEM
+4.2
+,%CPU
+53.3, %MEM
+4.2
+,%CPU
+53.2, %MEM
+4.2
+,%CPU
+53.2, %MEM
+4.2
+,%CPU
+53.1, %MEM
+4.2
+,%CPU
+53.0, %MEM
+4.2
+,%CPU
+52.9, %MEM
+4.2
+,%CPU
+52.8, %MEM
+4.2
+,%CPU
+52.7, %MEM
+4.2
+,%CPU
+52.6, %MEM
+4.2
+,%CPU
+52.5, %MEM
+4.2
+,%CPU
+52.5, %MEM
+4.2
+,%CPU
+52.3, %MEM
+4.2
+,%CPU
+52.3, %MEM
+4.2
+,%CPU
+52.2, %MEM
+4.2
+,%CPU
+52.1, %MEM
+4.2
+,%CPU
+52.0, %MEM
+4.2
+,%CPU
+52.0, %MEM
+4.2
+,%CPU
+51.9, %MEM
+4.2
+,%CPU
+51.8, %MEM
+4.2
+,%CPU
+51.7, %MEM
+4.2
+,%CPU
+51.6, %MEM
+4.2
+,%CPU
+51.5, %MEM
+4.2
+,%CPU
+51.5, %MEM
+4.2
+,%CPU
+51.4, %MEM
+4.2
+,%CPU
+51.3, %MEM
+4.2
+,%CPU
+51.2, %MEM
+4.2
+,%CPU
+51.2, %MEM
+4.2
+,%CPU
+51.1, %MEM
+4.2
+,%CPU
+51.0, %MEM
+4.2
+,%CPU
+50.9, %MEM
+4.2
+,%CPU
+50.9, %MEM
+4.2
+,%CPU
+50.8, %MEM
+4.2
+,%CPU
+50.7, %MEM
+4.2
+,%CPU
+50.6, %MEM
+4.2
+,%CPU
+50.6, %MEM
+4.2
+,%CPU
+50.5, %MEM
+4.2
+,%CPU
+50.5, %MEM
+4.2
+,%CPU
+50.4, %MEM
+4.2
+,%CPU
+50.3, %MEM
+4.2
+,%CPU
+50.3, %MEM
+4.2
+,%CPU
+50.2, %MEM
+4.2
+,%CPU
+50.1, %MEM
+4.2
+,%CPU
+50.1, %MEM
+4.2
+,%CPU
+50.0, %MEM
+4.2
+,%CPU
+50.0, %MEM
+4.2
+,%CPU
+49.6, %MEM
+4.2
+,%CPU
+49.6, %MEM
+4.2
+,%CPU
+49.6, %MEM
+4.2
+,%CPU
+49.5, %MEM
+4.2
+,%CPU
+49.4, %MEM
+4.2
+,%CPU
+49.4, %MEM
+4.2
+,%CPU
+49.3, %MEM
+4.2
+,%CPU
+49.3, %MEM
+4.2
+,%CPU
+49.2, %MEM
+4.2
+,%CPU
+49.2, %MEM
+4.2
+,%CPU
+49.1, %MEM
+4.2
+,%CPU
+49.0, %MEM
+4.7
+,%CPU
+51.4, %MEM
+5.3
+,%CPU
+53.3, %MEM
+5.0
+,%CPU
+53.5, %MEM
+5.0
+,%CPU
+53.7, %MEM
+5.3
+,%CPU
+53.8, %MEM
+5.0
+,%CPU
+54.0, %MEM
+5.3
+,%CPU
+54.2, %MEM
+5.0
+,%CPU
+54.3, %MEM
+5.3
+,%CPU
+54.5, %MEM
+5.3
+,%CPU
+54.7, %MEM
+5.0
+,%CPU
+54.9, %MEM
+5.3
+,%CPU
+55.0, %MEM
+5.3
+,%CPU
+55.2, %MEM
+5.0
+,%CPU
+56.2, %MEM
+5.3
+,%CPU
+58.6, %MEM
+5.0
+,%CPU
+58.8, %MEM
+5.3
+,%CPU
+58.9, %MEM
+5.3
+,%CPU
+59.0, %MEM
+5.0
+,%CPU
+59.2, %MEM
+5.3
+,%CPU
+59.3, %MEM
+5.0
+,%CPU
+59.5, %MEM
+5.3
+,%CPU
+59.5, %MEM
+5.3
+,%CPU
+59.7, %MEM
+5.0
+,%CPU
+59.8, %MEM
+5.3
+,%CPU
+59.9, %MEM
+5.3
+,%CPU
+60.1, %MEM
+5.0
+,%CPU
+60.4, %MEM
+5.3
+,%CPU
+62.7, %MEM
+5.3
+,%CPU
+63.3, %MEM
+5.0
+,%CPU
+63.5, %MEM
+5.0
+,%CPU
+63.7, %MEM
+5.0
+,%CPU
+63.7, %MEM
+5.0
+,%CPU
+63.9, %MEM
+5.3
+,%CPU
+64.0, %MEM
+5.0
+,%CPU
+64.1, %MEM
+5.0
+,%CPU
+64.3, %MEM
+5.3
+,%CPU
+64.3, %MEM
+5.3
+,%CPU
+64.4, %MEM
+5.0
+,%CPU
+64.6, %MEM
+5.3
+,%CPU
+64.7, %MEM
+5.3
+,%CPU
+65.7, %MEM
+5.3
+,%CPU
+67.8, %MEM
+5.3
+,%CPU
+67.9, %MEM
+5.0
+,%CPU
+67.9, %MEM
+5.0
+,%CPU
+68.0, %MEM
+5.3
+,%CPU
+68.1, %MEM
+5.3
+,%CPU
+68.3, %MEM
+5.0
+,%CPU
+68.3, %MEM
+5.3
+,%CPU
+68.4, %MEM
+5.3
+,%CPU
+68.5, %MEM
+5.0
+,%CPU
+68.7, %MEM
+5.3
+,%CPU
+68.7, %MEM
+5.3
+,%CPU
+68.8, %MEM
+5.0
+,%CPU
+68.8, %MEM
+5.0
